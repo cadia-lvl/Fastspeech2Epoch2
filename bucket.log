@@ -1,0 +1,15 @@
+<torch._C.Generator object at 0x7f2505a6b250>
+None
+None
+1234
+cuda
+Traceback (most recent call last):
+  File "/work/gfang/FastSpeech2Epoch2/train.py", line 93, in <module>
+    main(args, configs)
+  File "/work/gfang/FastSpeech2Epoch2/train.py", line 40, in main
+    dataset = Dataset("train.txt", preprocess_config, train_config, sort=True, drop_last=True)
+  File "/work/gfang/FastSpeech2Epoch2/dataset.py", line 20, in __init__
+    self.basename, self.speaker, self.text, self.raw_text = self.process_meta(filename)
+  File "/work/gfang/FastSpeech2Epoch2/dataset.py", line 93, in process_meta
+    with open(
+FileNotFoundError: [Errno 2] No such file or directory: '/work/gfang/ljspeech/epoch_processed/train.txt'
