@@ -5,5 +5,5 @@
 #SBATCH --mem-per-cpu=4G
 #SBATCH --gpus-per-node=1
 #SBATCH --output=bucket.log
-#SBATCH --partition=lvlWork
+#SBATCH --partition=build
 bash /home/gfang/work/FastSpeech2Epoch2/train.sh

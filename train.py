@@ -57,12 +57,12 @@ def main(args, configs):
     )
     
     test_data_iter = iter(test_loader)
-
+    print(test_data_iter)
     step = 1
 
     # Prepare model
     model, optimizer, scheduler = get_model(args, configs, device, train=True)
-    
+
     # Load checkpoint
     if args.checkpoint_path:
         print(f"Loading checkpoint {args.checkpoint_path}")
@@ -138,7 +138,10 @@ def main(args, configs):
                 
                 (
                     total_loss,
-                    complex_loss,
+                    mel_loss_l1,
+                    mel_loss_l2,
+                    phase_loss_l1,
+                    phase_loss_l2,
                     duration_loss_l1,
                     duration_loss_l2,
                     length_loss_ce
