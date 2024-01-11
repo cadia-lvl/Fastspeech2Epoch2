@@ -61,7 +61,7 @@ def convert_epoch_len(frames_t):
     current_start = 0
     result = []
     for frame in frames_t:
-        result.append((frame - current_start)*1000)
+        result.append((frame - current_start))
         current_start = frame    
     return np.array(result)
 

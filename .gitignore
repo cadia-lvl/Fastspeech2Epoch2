@@ -2,3 +2,4 @@ preprocessed_data/
 hifigan/
 slurm*
 bucket.log
+wandb/

@@ -25,6 +25,11 @@ class FastSpeech2Loss(nn.Module):
                 torch.linspace(0.0024999999999995026, 0.02400000000000002, 257 - 1),
                 requires_grad=False,
             )
+        
+        self.phase = nn.Parameter(
+                torch.linspace(-3.14, 3.14, 257 - 1),
+                requires_grad=False,
+            )
 
             # log_d_predictions,
             # mel_prediction,
@@ -98,12 +103,12 @@ class FastSpeech2Loss(nn.Module):
         mel_loss_l1 = self.mae_loss(mel_predictions, mel_targets)
         mel_loss_l2 = self.mse_loss(mel_predictions, mel_targets)
         
-        phase_loss_l1 = self.mae_loss(phase_predictions, phase_targets) / 50.0
-        phase_loss_l2 = self.mse_loss(phase_predictions, phase_targets) / 50.0
+        phase_loss_l1 = self.mae_loss(phase_predictions, phase_targets) / 50
+        phase_loss_l2 = self.mse_loss(phase_predictions, phase_targets) / 50
         
         # com_loss = self.complex_loss(mel_targets, phase_targets, mel_predictions, phase_predictions)
 
-        duration_loss_l1 = self.mae_loss(log_epochdur_predictions, log_epochdur_targets)
+        duration_loss_l1 = self.mae_loss(log_epochdur_predictions, log_epochdur_targets) 
         duration_loss_l2 = self.mse_loss(log_epochdur_predictions, log_epochdur_targets)
         
         # length_loss_l1 = self.mae_loss(epochlen_predictions, epochlen_targets)

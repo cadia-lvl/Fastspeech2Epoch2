@@ -46,7 +46,7 @@ class Dataset(Dataset):
         )
         mel = np.load(mel_path)
         # mel = np.log(mel+1)
-        mel = mel
+
         
         # phase
         phase_path = os.path.join(

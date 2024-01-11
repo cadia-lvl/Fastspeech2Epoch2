@@ -17,18 +17,26 @@ from utils.tools import to_device, plot_spectrograms, plot_lines, modify_length
 from model import FastSpeech2Loss
 from dataset import Dataset
 
+import pdb
+
 random_seed = 1234 # or any of your favorite number 
-print(torch.manual_seed(random_seed))
-print(torch.cuda.manual_seed(random_seed))
+torch.manual_seed(random_seed)
+torch.cuda.manual_seed(random_seed)
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
-print(np.random.seed(random_seed))
+np.random.seed(random_seed)
 
-print(random_seed)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print(device)
+
+run = wandb.init(
+    # Set the project where this run will be logged
+    project="FastSpeechEpoch",
+    name='FastSpeechEpochResultBucket',
+    # mode="offline"
+)
 
 def main(args, configs):
     preprocess_config, model_config, train_config = configs
@@ -57,9 +65,8 @@ def main(args, configs):
     )
     
     test_data_iter = iter(test_loader)
-    print(test_data_iter)
     step = 1
-
+    pdb.set_trace()
     # Prepare model
     model, optimizer, scheduler = get_model(args, configs, device, train=True)
 
@@ -80,6 +87,9 @@ def main(args, configs):
     num_param = get_param_num(model)
     Loss = FastSpeech2Loss(preprocess_config, model_config).to(device)
     print("Number of FastSpeech2 Parameters:", num_param)
+    #for p in model.parameters():
+    #    print(p.numel())
+    #exit(0)
 
     # Init path
     result_root_path = train_config["path"]["result_path"]
@@ -162,9 +172,9 @@ def main(args, configs):
 
                 # Log the loss
                 if step % log_step == 0:
-                    losses_keys = ['Total Loss', 'Complex Loss', 'Duration L1 Loss', 'Duration L2 Loss', 'Epoch Len CE']
-                    losses_report = {l_key: l.item() for l_key, l in zip(losses_keys, losses)}
-                    
+                    #losses_keys = ['Total Loss', 'Complex Loss', 'Duration L1 Loss', 'Duration L2 Loss', 'Epoch Len CE']
+                    losses_keys = ['Total Loss', 'Mel Loss L1', 'Mel Loss L2', 'Phase Loss L1', 'Phase Loss L2', 'Duration Loss L1', 'Duration Loss L2', 'Epoch Len EC']
+                    losses_report = {l_key: l.item() for l_key, l in zip(losses_keys, losses)}                    
                     wandb.log(losses_report, step=step)
 
                 # Visualize the reconstruction

@@ -1,5 +1,5 @@
 path:
-  result_path: "/work/shijun/FastSpeechEpochResultComplex"
+  result_path: "/work/gfang/FastSpeechEpochResult2"
 optimizer:
   batch_size: 16
   betas: [0.9, 0.98]
